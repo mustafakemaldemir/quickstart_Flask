@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action = "{{ url_for('Result') }}" method = "POST">
+
+    <p> İsminizi Giriniz: <input type = "text" name = "name" /> </p>
+    <p> Matematik Notu: <input type = "text" name = "mathematics" /> </p>
+    <p> Fizik Notu: <input type = "text" name = "physics" /> </p>
+    <p> Kimya Notu: <input type = "text" name = "chemistry" /> </p>
+    <p> Biyoloji Notu: <input type = "text" name = "biology" /> </p>
+    <p><input type="submit" name="submit" value="Submit"/> </p>
+
+</form>
+
+</body>
+</html>
