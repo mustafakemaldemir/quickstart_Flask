@@ -1,4 +1,5 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response
+from itsdangerous import Signer, BadSignature
 
 app = Flask(__name__)
 
@@ -10,6 +11,23 @@ def flask_jsonify_web_api():
 def flask_jsonify_web_api_index(name: str):
     #name = request.args.get("name")
     return jsonify(data = name)
+
+@app.route("/hello_flask_cookie")
+def flask_cookie():
+    signer = Signer("secret key")  # cookie şifresi
+    signed_name = request.cookies.get('name')
+
+    try:
+        name = signer.unsign(signed_name).decode()
+        print("name", name)
+    except BadSignature:
+        print('Bad signature')
+
+    signed_name = str(signer.sign("MKD"))
+    response = make_response("Flask Cookie Denemesi")
+    response.set_cookie("name", signed_name)
+    return response
+
 
 @app.route("/hello_index")
 def Flask_index_page():
