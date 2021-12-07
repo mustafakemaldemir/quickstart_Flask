@@ -1,8 +1,17 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods = ["POST", "GET"])
+def flask_jsonify_web_api():
+    return "Welcome FLASK"
+
+@app.route("/<string:name>", methods = ["POST", "GET"])
+def flask_jsonify_web_api_index(name: str):
+    #name = request.args.get("name")
+    return jsonify(data = name)
+
+@app.route("/hello_index")
 def Flask_index_page():
     return "İndex Page"
 
@@ -52,3 +61,6 @@ def Result ():
     }
 
     return render_template("student_result.html", **ContextData)
+
+if __name__ == "main":
+    app.run()
