@@ -1,7 +1,13 @@
-from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response
+from flask import Flask, render_template, redirect, url_for, request, jsonify, make_response, Blueprint
 from itsdangerous import Signer, BadSignature
 
+from app.student import apiStudents
+from quickstart_Flask.initialize_db import createDB
+
 app = Flask(__name__)
+#app = createApp()
+#createDB()
+app.register_blueprint(apiStudents)
 
 @app.route("/", methods = ["POST", "GET"])
 def flask_jsonify_web_api():
@@ -10,7 +16,8 @@ def flask_jsonify_web_api():
 @app.route("/<string:name>", methods = ["POST", "GET"])
 def flask_jsonify_web_api_index(name: str):
     #name = request.args.get("name")
-    return jsonify(data = name)
+    #return jsonify(data = name)
+    return jsonify ({"success" : True , "message" : name})
 
 @app.route("/hello_flask_cookie")
 def flask_cookie():
@@ -81,4 +88,4 @@ def Result ():
     return render_template("student_result.html", **ContextData)
 
 if __name__ == "main":
-    app.run()
+    app.run(debug=True)
